@@ -1,0 +1,339 @@
+### API de Gerenciamento de Projetos e Tarefas
+### Arquivo de exemplos para testar todas as funcionalidades
+### Use este arquivo com extensões como REST Client (VS Code) ou Postman
+
+@baseUrl = http://localhost:8000
+
+### ========================================
+### 📋 INFORMAÇÕES DA API
+### ========================================
+
+### Obter informações gerais da API
+GET {{baseUrl}}
+
+### ========================================
+### 👥 USUÁRIOS
+### ========================================
+
+### Listar todos os usuários
+GET {{baseUrl}}/users
+
+### Buscar usuário específico (ID = 1)
+GET {{baseUrl}}/users/1
+
+### Criar novo usuário
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Carlos Mendes",
+  "email": "carlos@email.com"
+}
+
+### Atualizar usuário existente (ID = 1)
+PUT {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+  "name": "Carlos Mendes Silva",
+  "email": "carlos.silva@email.com"
+}
+
+### Deletar usuário (ID = 4) - Cuidado: só funciona se não tiver projetos/tarefas
+# DELETE {{baseUrl}}/users/4
+
+### ========================================
+### 📁 PROJETOS
+### ========================================
+
+### Listar todos os projetos
+GET {{baseUrl}}/projects
+
+### Buscar projeto específico (ID = 1)
+GET {{baseUrl}}/projects/1
+
+### Criar novo projeto
+POST {{baseUrl}}/projects
+Content-Type: application/json
+
+{
+  "title": "Sistema de Vendas Online",
+  "description": "Desenvolvimento de uma plataforma completa de e-commerce com carrinho de compras, pagamentos e gestão de estoque",
+  "deadline": "2024-08-15",
+  "created_by": 1,
+  "status": "ativo"
+}
+
+### Atualizar projeto existente (ID = 1)
+PUT {{baseUrl}}/projects/1
+Content-Type: application/json
+
+{
+  "title": "Website da Empresa - Versão 2.0",
+  "description": "Atualização completa do site institucional com novo design responsivo",
+  "deadline": "2024-04-30",
+  "status": "em_andamento"
+}
+
+### Marcar projeto como concluído
+PUT {{baseUrl}}/projects/2
+Content-Type: application/json
+
+{
+  "title": "App Mobile",
+  "status": "concluido"
+}
+
+### Deletar projeto (ID = 3) - Cuidado: deleta todas as tarefas também
+# DELETE {{baseUrl}}/projects/3
+
+### ========================================
+### ✅ TAREFAS
+### ========================================
+
+### Listar todas as tarefas
+GET {{baseUrl}}/tasks
+
+### Filtrar tarefas por projeto
+GET {{baseUrl}}/tasks?project_id=1
+
+### Filtrar tarefas por usuário atribuído
+GET {{baseUrl}}/tasks?assigned_to=2
+
+### Filtrar tarefas por status
+GET {{baseUrl}}/tasks?status=pendente
+
+### Filtrar tarefas por prioridade
+GET {{baseUrl}}/tasks?priority=alta
+
+### Filtros combinados
+GET {{baseUrl}}/tasks?project_id=1&status=em_andamento&priority=alta
+
+### Buscar tarefa específica (ID = 1)
+GET {{baseUrl}}/tasks/1
+
+### Criar nova tarefa com prioridade alta
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Implementar sistema de login",
+  "description": "Desenvolver autenticação de usuários com email e senha, incluindo recuperação de senha",
+  "project_id": 1,
+  "assigned_to": 2,
+  "created_by": 1,
+  "priority": "alta",
+  "status": "pendente",
+  "deadline": "2024-03-20"
+}
+
+### Criar tarefa sem usuário atribuído
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Pesquisar tecnologias de pagamento",
+  "description": "Analisar opções de gateway de pagamento (PagSeguro, Mercado Pago, Stripe)",
+  "project_id": 1,
+  "created_by": 1,
+  "priority": "media",
+  "deadline": "2024-03-10"
+}
+
+### Atribuir tarefa a um usuário
+PUT {{baseUrl}}/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Criar layout inicial",
+  "assigned_to": 3,
+  "status": "em_andamento"
+}
+
+### Marcar tarefa como concluída
+PUT {{baseUrl}}/tasks/2
+Content-Type: application/json
+
+{
+  "title": "Configurar banco de dados",
+  "status": "concluida"
+}
+
+### Alterar prioridade da tarefa
+PUT {{baseUrl}}/tasks/3
+Content-Type: application/json
+
+{
+  "title": "Desenvolver tela de login",
+  "priority": "alta",
+  "deadline": "2024-02-25"
+}
+
+### Remover usuário atribuído da tarefa
+PUT {{baseUrl}}/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Criar layout inicial",
+  "assigned_to": null,
+  "status": "pendente"
+}
+
+### Deletar tarefa (ID = 5)
+# DELETE {{baseUrl}}/tasks/5
+
+### ========================================
+### 🧪 TESTES DE VALIDAÇÃO
+### ========================================
+
+### Tentar criar usuário com email inválido (deve dar erro)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Teste",
+  "email": "email-invalido"
+}
+
+### Tentar criar usuário com email duplicado (deve dar erro)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Outro João",
+  "email": "joao@email.com"
+}
+
+### Tentar criar projeto sem título (deve dar erro)
+POST {{baseUrl}}/projects
+Content-Type: application/json
+
+{
+  "description": "Projeto sem título",
+  "created_by": 1
+}
+
+### Tentar criar tarefa com data inválida (deve dar erro)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Tarefa com data inválida",
+  "project_id": 1,
+  "created_by": 1,
+  "deadline": "data-invalida"
+}
+
+### Tentar criar tarefa com prioridade inválida (deve dar erro)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Tarefa com prioridade inválida",
+  "project_id": 1,
+  "created_by": 1,
+  "priority": "urgentissima"
+}
+
+### Tentar buscar usuário inexistente (deve retornar 404)
+GET {{baseUrl}}/users/999
+
+### Tentar buscar projeto inexistente (deve retornar 404)
+GET {{baseUrl}}/projects/999
+
+### Tentar buscar tarefa inexistente (deve retornar 404)
+GET {{baseUrl}}/tasks/999
+
+### ========================================
+### 📊 CENÁRIOS DE USO REAL
+### ========================================
+
+### Cenário 1: Criar um projeto completo com tarefas
+
+# 1. Criar o projeto
+POST {{baseUrl}}/projects
+Content-Type: application/json
+
+{
+  "title": "Loja Virtual de Roupas",
+  "description": "E-commerce completo para venda de roupas femininas e masculinas",
+  "deadline": "2024-06-30",
+  "created_by": 1
+}
+
+# 2. Criar tarefas do projeto (use o ID do projeto criado acima)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Criar wireframes das páginas",
+  "description": "Desenhar o layout de todas as páginas principais",
+  "project_id": 3,
+  "assigned_to": 2,
+  "created_by": 1,
+  "priority": "alta",
+  "deadline": "2024-03-15"
+}
+
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Desenvolver catálogo de produtos",
+  "description": "Implementar listagem e filtros de produtos",
+  "project_id": 3,
+  "assigned_to": 3,
+  "created_by": 1,
+  "priority": "alta",
+  "deadline": "2024-04-15"
+}
+
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Integrar sistema de pagamento",
+  "description": "Conectar com gateway de pagamento",
+  "project_id": 3,
+  "created_by": 1,
+  "priority": "media",
+  "deadline": "2024-05-15"
+}
+
+### Cenário 2: Acompanhar progresso do projeto
+
+# Verificar status geral do projeto
+GET {{baseUrl}}/projects/3
+
+# Ver todas as tarefas do projeto
+GET {{baseUrl}}/tasks?project_id=3
+
+# Ver tarefas pendentes
+GET {{baseUrl}}/tasks?project_id=3&status=pendente
+
+# Ver tarefas de alta prioridade
+GET {{baseUrl}}/tasks?project_id=3&priority=alta
+
+### ========================================
+### 💡 DICAS DE USO
+### ========================================
+
+# 1. Sempre verifique os IDs antes de fazer operações
+# 2. Use filtros para encontrar informações específicas
+# 3. Teste cenários de erro para entender as validações
+# 4. Monitore prazos usando os campos de deadline
+# 5. Use as estatísticas dos projetos para acompanhar progresso
+
+### ========================================
+### 🔧 COMANDOS ÚTEIS
+### ========================================
+
+# Para iniciar o servidor:
+# php -S localhost:8000
+
+# Para ver o banco de dados:
+# O arquivo fica em: database/projeto_api.db
+# Use um visualizador SQLite como DB Browser
+
+# Para resetar dados:
+# Delete o arquivo database/projeto_api.db e reinicie o servidor

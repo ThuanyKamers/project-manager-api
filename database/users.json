@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "João Silva",
+        "email": "joao@email.com",
+        "created_at": "2025-08-14 16:47:56"
+    },
+    {
+        "id": 2,
+        "name": "Maria Santos",
+        "email": "maria@email.com",
+        "created_at": "2025-08-14 16:47:56"
+    },
+    {
+        "id": 3,
+        "name": "Pedro Oliveira",
+        "email": "pedro@email.com",
+        "created_at": "2025-08-14 16:47:56"
+    }
+]
