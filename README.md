@@ -10,10 +10,7 @@ Esta é uma **API REST** (Application Programming Interface) criada em PHP para 
 
 ### 🎯 Funcionalidades Principais
 
-✅ **Gerenciar Usuários** - Criar, listar, atualizar e deletar usuários
 ✅ **Gerenciar Projetos** - Criar projetos com prazos e descrições
-✅ **Gerenciar Tarefas** - Atribuir tarefas a usuários com prioridades
-✅ **Controle de Prazos** - Definir e monitorar datas limite
 ✅ **Status de Progresso** - Acompanhar o andamento de projetos e tarefas
 
 ## 🚀 Como Executar
@@ -50,46 +47,6 @@ Todas as respostas são em JSON:
   "message": "Operação realizada com sucesso"
 }
 ```
-
-### 👥 Endpoints de Usuários
-
-#### Listar todos os usuários
-```http
-GET /users
-```
-
-#### Buscar usuário específico
-```http
-GET /users/1
-```
-
-#### Criar novo usuário
-```http
-POST /users
-Content-Type: application/json
-
-{
-  "name": "Ana Silva",
-  "email": "ana@email.com"
-}
-```
-
-#### Atualizar usuário
-```http
-PUT /users/1
-Content-Type: application/json
-
-{
-  "name": "Ana Silva Santos",
-  "email": "ana.santos@email.com"
-}
-```
-
-#### Deletar usuário
-```http
-DELETE /users/1
-```
-
 ### 📁 Endpoints de Projetos
 
 #### Listar todos os projetos
@@ -189,16 +146,6 @@ DELETE /tasks/1
 - `pausado` - Projeto temporariamente parado
 - `concluido` - Projeto finalizado
 - `cancelado` - Projeto cancelado
-
-### Status de Tarefas
-- `pendente` - Tarefa ainda não iniciada
-- `em_andamento` - Tarefa sendo executada
-- `concluida` - Tarefa finalizada
-
-### Prioridades de Tarefas
-- `baixa` - Pode ser feita depois
-- `media` - Prioridade normal
-- `alta` - Urgente, fazer primeiro
 
 ## 🗄️ Estrutura do Banco de Dados
 
