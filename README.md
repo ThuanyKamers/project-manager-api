@@ -1,235 +1,264 @@
-# API de Gerenciamento de Projetos e Tarefas
+# Project and Task Management API
 
-## 📋 O que é esta API?
+## 📋 What is this API?
 
-Esta é uma **API REST** (Application Programming Interface) criada em PHP para gerenciar projetos e tarefas. Pense nela como um "garçom digital" que:
+This is a **REST API** (Application Programming Interface) created in PHP to manage projects and tasks. Think of it as a "digital waiter" that:
 
-- **Recebe pedidos** (requisições HTTP)
-- **Processa as informações** (consulta o banco de dados)
-- **Retorna respostas** (dados em formato JSON)
+- **Receives orders** (HTTP requests)
+- **Processes the information** (queries the database)
+- **Returns responses** (data in JSON format)
 
-### 🎯 Funcionalidades Principais
+### 🎯 Key Features
 
-✅ **Gerenciar Projetos** - Criar projetos com prazos e descrições
-✅ **Status de Progresso** - Acompanhar o andamento de projetos e tarefas
+✅ **Manage Projects** - Create projects with deadlines and descriptions
+✅ **Progress Status** - Track the progress of projects and tasks
 
-## 🚀 Como Executar
+## 🚀 How to Run
 
-### Pré-requisitos
-- PHP 7.4 ou superior
-- Extensão PDO SQLite habilitada
+### Prerequisites
+- PHP 7.4 or higher
+- PDO SQLite extension enabled
 
-### Passos para Executar
+### Steps to Run
 
-1. **Abra o terminal** na pasta do projeto
-2. **Execute o servidor PHP**:
-   ```bash
-   php -S localhost:8000
-   ```
-3. **Acesse no navegador**: http://localhost:8000
+1. **Open the terminal** in the project folder
+2. **Execute the PHP server**:
+   ```bash
+   php -S localhost:8000
+   ```
+3. **Access in the browser**: http://localhost:8000
 
-## 📚 Como Usar a API
+## 📚 How to Use the API
 
-### 🔍 Conceitos Básicos
+### 🔍 Basic Concepts
 
-**Métodos HTTP:**
-- `GET` = Buscar/Listar dados
-- `POST` = Criar novos dados
-- `PUT` = Atualizar dados existentes
-- `DELETE` = Deletar dados
+**HTTP Methods:**
+- `GET` = Retrieve/List data
+- `POST` = Create new data
+- `PUT` = Update existing data
+- `DELETE` = Delete data
 
-**Formato das Respostas:**
-Todas as respostas são em JSON:
+**Response Format:**
+All responses are in JSON:
 ```json
 {
-  "success": true,
-  "data": {...},
-  "message": "Operação realizada com sucesso"
+  "success": true,
+  "data": {...},
+  "message": "Operation performed successfully"
 }
 ```
-### 📁 Endpoints de Projetos
 
-#### Listar todos os projetos
-```http
+📁 Project Endpoints
+List all projects
+```HTTP
 GET /projects
 ```
 
-#### Buscar projeto específico
-```http
+#### Retrieve specific project
+```HTTP
 GET /projects/1
 ```
 
-#### Criar novo projeto
-```http
+#### Create new project
+```HTTP
+
 POST /projects
 Content-Type: application/json
 
 {
-  "title": "Novo Website",
-  "description": "Desenvolvimento do site da empresa",
-  "deadline": "2024-06-30",
-  "created_by": 1
+  "title": "New Website",
+  "description": "Company website development",
+  "deadline": "2024-06-30",
+  "created_by": 1
 }
 ```
 
-#### Atualizar projeto
-```http
+#### Update project
+```HTTP
+
 PUT /projects/1
 Content-Type: application/json
 
 {
-  "title": "Website Atualizado",
-  "status": "em_andamento",
-  "deadline": "2024-07-15"
+  "title": "Updated Website",
+  "status": "in_progress",
+  "deadline": "2024-07-15"
 }
 ```
 
-#### Deletar projeto
-```http
+#### Delete project
+```HTTP
 DELETE /projects/1
 ```
 
-### ✅ Endpoints de Tarefas
-
-#### Listar todas as tarefas
-```http
+### ✅ Task Endpoints
+#### List all tasks
+```HTTP
 GET /tasks
 ```
 
-#### Filtrar tarefas
-```http
-GET /tasks?project_id=1&status=pendente&priority=alta
+#### Filter tasks
+```HTTP
+GET /tasks?project_id=1&status=pending&priority=high
 ```
 
-#### Buscar tarefa específica
-```http
+#### Retrieve specific task
+```HTTP
 GET /tasks/1
 ```
 
-#### Criar nova tarefa
-```http
+#### Create new task
+```HTTP
 POST /tasks
 Content-Type: application/json
 
 {
-  "title": "Criar página inicial",
-  "description": "Desenvolver o layout da homepage",
-  "project_id": 1,
-  "assigned_to": 2,
-  "created_by": 1,
-  "priority": "alta",
-  "deadline": "2024-03-15"
+  "title": "Create homepage",
+  "description": "Develop the homepage layout",
+  "project_id": 1,
+  "assigned_to": 2,
+  "created_by": 1,
+  "priority": "high",
+  "deadline": "2024-03-15"
 }
 ```
 
-#### Atualizar tarefa
-```http
+#### Update task
+```HTTP
 PUT /tasks/1
 Content-Type: application/json
 
 {
-  "title": "Página inicial finalizada",
-  "status": "concluida",
-  "assigned_to": 2
+  "title": "Homepage finalized",
+  "status": "completed",
+  "assigned_to": 2
 }
 ```
 
-#### Deletar tarefa
-```http
+#### Delete task
+```HTTP
 DELETE /tasks/1
 ```
 
-## 📊 Status e Prioridades
+## 📊 Status and Priorities
 
-### Status de Projetos
-- `ativo` - Projeto em andamento
-- `pausado` - Projeto temporariamente parado
-- `concluido` - Projeto finalizado
-- `cancelado` - Projeto cancelado
+### Project Statuses
+- `active` - Project in progress
 
-## 🗄️ Estrutura do Banco de Dados
+- `paused` - Project temporarily paused
 
-A API usa SQLite (um banco de dados em arquivo) com 3 tabelas principais:
+- `completed` - Project finalized
 
-### Tabela `users`
-- `id` - Identificador único
-- `name` - Nome do usuário
-- `email` - Email (único)
-- `created_at` - Data de criação
+- `canceled` - Project cancelled
 
-### Tabela `projects`
-- `id` - Identificador único
-- `title` - Título do projeto
-- `description` - Descrição detalhada
-- `deadline` - Data limite
-- `status` - Status atual
-- `created_by` - ID do usuário criador
-- `created_at` - Data de criação
+## 🗄️ Database Structure
 
-### Tabela `tasks`
-- `id` - Identificador único
-- `title` - Título da tarefa
-- `description` - Descrição detalhada
-- `status` - Status atual
-- `priority` - Prioridade
-- `deadline` - Data limite
-- `project_id` - ID do projeto (obrigatório)
-- `assigned_to` - ID do usuário responsável
-- `created_by` - ID do usuário criador
-- `created_at` - Data de criação
-- `completed_at` - Data de conclusão
+The API uses SQLite (a file-based database) with 3 main tables:
 
-## 🛠️ Testando a API
+### `users` Table
+- `id` - Unique identifier
 
-### Usando o Navegador
-Para requisições GET, você pode usar diretamente o navegador:
+- `name` - User name
+
+- `email` - Email (unique)
+
+- `created_at` - Creation date
+
+### `projects` Table
+- `id` - Unique identifier
+
+- `title` - Project title
+
+- `description` - Detailed description
+
+- `deadline` - Deadline
+
+- `status` - Current status
+
+- `created_by` - Creator user ID
+
+- `created_at` - Creation date
+
+### `tasks` Table
+- `id` - Unique identifier
+
+- `title` - Task title
+
+- `description` - Detailed description
+
+- `status` - Current status
+
+- `priority` - Priority
+
+- `deadline` - Deadline
+
+- `project_id` - Project ID (required)
+
+- `assigned_to` - Responsible user ID
+
+- `created_by` - Creator user ID
+
+- `created_at` - Creation date
+
+- `completed_at` - Completion date
+
+## 🛠️ Testing the API
+
+### Using the Browser
+For GET requests, you can use the browser directly:
 - http://localhost:8000/users
 - http://localhost:8000/projects
 - http://localhost:8000/tasks
 
-### Usando Ferramentas
-- **Postman** - Interface gráfica para testar APIs
-- **Insomnia** - Alternativa ao Postman
-- **cURL** - Linha de comando
-- **Thunder Client** - Extensão do VS Code
+### Using Tools
+- **Postman** - Graphical interface for testing APIs
 
-### Exemplo com cURL
+- **Insomnia** - Alternative to Postman
+
+- **cURL** - Command line
+
+- **Thunder Client** - VS Code Extension
+
+### Example with cURL
 ```bash
-# Listar usuários
+
+# List users
 curl http://localhost:8000/users
 
-# Criar usuário
+# Create user
 curl -X POST http://localhost:8000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"João","email":"joao@email.com"}'
+  -H "Content-Type: application/json" \
+  -d '{"name":"João","email":"joao@email.com"}'
 ```
 
-## 🎯 Próximos Passos
+## 🎯 Next Steps
 
-Agora que você tem uma API funcionando, pode:
+Now that you have a functional API, you can:
 
-1. **Criar uma interface web** (HTML/CSS/JavaScript)
-2. **Desenvolver um app mobile** que consuma esta API
-3. **Adicionar autenticação** (login/senha)
-4. **Implementar notificações** por email
-5. **Adicionar relatórios** de produtividade
+1. **Create a web interface** (HTML/CSS/JavaScript)
 
-## 🆘 Resolução de Problemas
+2. **Develop a mobile app** that consumes this API
 
-### Erro "Endpoint não encontrado"
-- Verifique se a URL está correta
-- Certifique-se de que o servidor está rodando
+3. **Add authentication** (login/password)
 
-### Erro "Usuário não encontrado"
-- Verifique se o ID do usuário existe
-- Use GET /users para ver todos os usuários
+4. **Implement notifications** by email
 
-### Erro "Email já está em uso"
-- Cada usuário deve ter um email único
-- Verifique se não há duplicatas
+5. **Add reports** of productivity
 
-### Banco de dados não criado
-- Verifique se a pasta tem permissões de escrita
-- O arquivo será criado automaticamente em `database/projeto_api.db`
+## 🆘 Troubleshooting
 
----
+### Error "Endpoint not found"
+- Verify if the URL is correct
+- Ensure the server is running
+
+### Error "User not found"
+- Verify if the user ID exists
+- Use GET /users to see all users
+
+### Error "Email already in use"
+- Each user must have a unique email
+- Check for duplicates
+
+### Database not created
+- Verify if the folder has write permissions
+- The file will be automatically created in `database/projeto_api.db`
