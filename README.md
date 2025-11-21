@@ -233,11 +233,3 @@ Agora que você tem uma API funcionando, pode:
 - O arquivo será criado automaticamente em `database/projeto_api.db`
 
 ---
-
-**Parabéns! 🎉** Você agora tem uma API completa para gerenciar projetos e tarefas!
-
-Esta API pode ser a base para sistemas mais complexos como:
-- Sistemas de gestão empresarial
-- Aplicativos de produtividade
-- Ferramentas de colaboração em equipe
-- Dashboards de acompanhamento de projetos
